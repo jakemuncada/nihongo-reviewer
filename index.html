@@ -1,0 +1,105 @@
+<html>
+<head>
+    <script src="grammar.js"></script>
+    <script src="index.js"></script>
+    <style>
+        #content {
+            min-height: 100px;
+            margin-bottom: 30px;
+            padding: 18px;
+            border: 1px solid black;
+        }
+        #instructions {
+            margin-top: 18px;
+        }
+        .color {
+            color: red;
+        }
+        button {
+            margin-bottom: 12px;
+        }
+        #image-wrap {
+            margin-top: 12px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            margin-bottom: 100px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .right {
+            float: right;
+        }
+        .noselect {
+            -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Old versions of Firefox */
+                    -ms-user-select: none; /* Internet Explorer/Edge */
+                        user-select: none; /* Non-prefixed version, currently
+                                            supported by Chrome, Edge, Opera and Firefox */
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <button id="btnSettings">Settings</button>
+        <div id="instructions">
+            Practice saying the following sentence in Nihongo:
+        </div>
+        <div id="content">
+            <div id="eng"></div>
+            <div id="jap" hidden></div>
+            <div id="furi" hidden></div>
+        </div>
+        <button id="btnPrev" disabled>Prev</button>
+        <button id="btnNihongo">Show Nihongo</button>
+        <button id="btnFlashcard">Show Flashcard</button>
+        <button id="btnNext">Next</button>
+        <div id="controls-text">
+            You can also use the Arrow keys or WSAD keys.
+        </div>
+        <div id="image-wrap" hidden>
+            <img src="" id="image" alt="" />
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div id="settingsContent" class="modal-content">
+            <div>
+                <button id="btnSettingsAll">All</button>
+                <button id="btnSettingsNone">None</button>
+                <button id="btnSettingsRandom10">Select Random 10</button>
+                <span class="right">
+                    <button id="btnSettingsSave">Save</button>
+                    <button id="btnSettingsCancel">Cancel</button>
+                </span>
+            </div>
+            <div id="settingsTableDiv"></div>
+        </div>
+    </div>
+</body>
+</html>
