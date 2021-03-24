@@ -3,7 +3,7 @@ body {
 }
 
 #main {
-    max-width: 960px;
+    max-width: 760px;
     padding-top: 20px;
 }
 
@@ -22,6 +22,38 @@ body {
     margin-top: 18px;
 }
 
+#divControls {
+    margin: auto;
+    text-align: center;
+    max-width: 600px;
+}
+
+.control-btn {
+    min-height: 40px;
+}
+
+.control-btn-small {
+    min-width: 50px;
+}
+
+.control-btn-large {
+    min-width: 150px;
+}
+
+@media only screen and (max-width: 500px) {
+    .control-btn {
+        min-height: 30px;
+    }
+
+    .control-btn-small {
+        min-width: 40px;
+    }
+
+    .control-btn-large {
+        min-width: 120px;
+    }
+}
+
 .color {
     color: red;
 }
@@ -37,6 +69,8 @@ button {
 
 #image-wrap {
     margin-top: 12px;
+    margin: auto;
+    text-align: center;
 }
 
 .modal {
