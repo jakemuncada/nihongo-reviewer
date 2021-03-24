@@ -69,8 +69,9 @@ function initGrammarLists() {
         return grammarList.map((item) => {
             let key = `n${item.level}-grammar${item.num}`;
             let isSelected = localStorage.getItem(key);
-            isSelected = isSelected === null ? "true" : "false";
+            isSelected = isSelected === null ? "true" : isSelected;
             isSelected = isSelected === "true" ? true : false;
+            console.log(key, isSelected);
             return {
                 num: item.num,
                 level: item.level,
@@ -326,11 +327,17 @@ function handleSettingsRowClick(row) {
 function showCurr() {
     if (currIdx < 0 || currIdx >= sampleSentences.length) {
         divEng.hidden = true;
+        btnPrev.disabled = true;
+        btnNext.disabled = true;
+        btnFlashcard.disabled = true;
+        btnNihongo.disabled = true;
         console.log("Invalid index:", currIdx);
         return;
     }
 
     divEng.hidden = false;
+    btnNihongo.disabled = false;
+
     hideNihongo();
     hideFlashcard();
 
