@@ -9,90 +9,19 @@
     <script src="grammar-n5.js"></script>
     <script src="index.js"></script>
     
-    <style>
-        body {
-            font-size: 1em;
-        }
-        #content {
-            min-height: 100px;
-            margin-bottom: 30px;
-            padding: 18px;
-            border: 1px solid black;
-        }
-        #instructions {
-            margin-top: 18px;
-        }
-        .color {
-            color: red;
-        }
-        img {
-            max-width: 100%;
-        }
-        button {
-            font-size: 0.85em;
-            margin-bottom: 12px;
-        }
-        #image-wrap {
-            margin-top: 12px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 50px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: scroll;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            max-width: 800px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            margin-bottom: 100px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        table, th, td {
-            border: 1px solid gray;
-            border-collapse: collapse;
-        }
-        td {
-            padding: 8px;
-            cursor: pointer;
-        }
-        .right {
-            float: right;
-        }
-        .vert-margin {
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-        .noselect {
-            -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Old versions of Firefox */
-                    -ms-user-select: none; /* Internet Explorer/Edge */
-                        user-select: none; /* Non-prefixed version, currently
-                                            supported by Chrome, Edge, Opera and Firefox */
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="center">
         <button id="btnSettings">Settings</button>
         <div id="instructions">
             Practice saying the following sentence in Nihongo:
         </div>
         <div id="content">
-            <div id="eng"></div>
-            <div id="jap" hidden></div>
-            <div id="furi" hidden></div>
+            <div id="eng" class="center"></div>
+            <div id="jap" class="center" hidden></div>
+            <div id="furi" class="center" hidden></div>
         </div>
         <button id="btnPrev" disabled>Prev</button>
         <button id="btnNihongo">Show Nihongo</button>
@@ -108,15 +37,31 @@
 
     <div id="settingsModal" class="modal">
         <div id="settingsContent" class="modal-content">
+            <button id="btnCloseSettings" class="right">Close</button>
             <div>
                 <h3>Settings</h2>
             </div>
             <hr />
-            <div class="vert-margin"><input type="radio" id="levelN1" name="level" value="1"/><label for="levelN1">N1 Grammar</label></div>
-            <div class="vert-margin"><input type="radio" id="levelN2" name="level" value="2"/><label for="levelN2">N2 Grammar</label></div>
-            <div class="vert-margin"><input type="radio" id="levelN3" name="level" value="3"/><label for="levelN3">N3 Grammar</label></div>
-            <div class="vert-margin"><input type="radio" id="levelN4" name="level" value="4"/><label for="levelN4">N4 Grammar</label></div>
-            <div class="vert-margin"><input type="radio" id="levelN5" name="level" value="5"/><label for="levelN5">N5 Grammar</label></div>
+            <div class="vert-margin">
+                <input type="radio" id="levelN1" name="level" value="1"/>
+                <label for="levelN1">N1 Grammar</label>
+            </div>
+            <div class="vert-margin">
+                <input type="radio" id="levelN2" name="level" value="2"/>
+                <label for="levelN2">N2 Grammar</label>
+            </div>
+            <div class="vert-margin">
+                <input type="radio" id="levelN3" name="level" value="3"/>
+                <label for="levelN3">N3 Grammar</label>
+            </div>
+            <div class="vert-margin">
+                <input type="radio" id="levelN4" name="level" value="4"/>
+                <label for="levelN4">N4 Grammar</label>
+            </div>
+            <div class="vert-margin">
+                <input type="radio" id="levelN5" name="level" value="5"/>
+                <label for="levelN5">N5 Grammar</label>
+            </div>
             <hr />
             <div>
                 <div class="vert-margin">Select the grammar lessons to include in the reviewer:</div>

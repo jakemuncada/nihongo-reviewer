@@ -101,6 +101,11 @@ function initSettings() {
         }
     };
 
+    document.getElementById("btnCloseSettings").addEventListener("click", () => {
+        saveSettings();
+        settingsModal.style.display = "none";
+    });
+
     selectedLevel = localStorage.getItem("selectedLevel");
     selectedLevel = selectedLevel === null ? 5 : parseInt(selectedLevel, 10);
     document.getElementById("levelN" + selectedLevel).checked = true;
