@@ -327,11 +327,17 @@ function handleSettingsRowClick(row) {
 function showCurr() {
     if (currIdx < 0 || currIdx >= sampleSentences.length) {
         divEng.hidden = true;
+        btnPrev.disabled = true;
+        btnNext.disabled = true;
+        btnFlashcard.disabled = true;
+        btnNihongo.disabled = true;
         console.log("Invalid index:", currIdx);
         return;
     }
 
     divEng.hidden = false;
+    btnNihongo.disabled = false;
+
     hideNihongo();
     hideFlashcard();
 
