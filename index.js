@@ -58,6 +58,7 @@ function initElements() {
 }
 
 function initButtons() {
+    btnPrev.addEventListener("click", showPrev);
     btnNext.addEventListener("click", showNext);
     btnNihongo.addEventListener("click", toggleNihongo);
     btnFlashcard.addEventListener("click", toggleFlashcard);
