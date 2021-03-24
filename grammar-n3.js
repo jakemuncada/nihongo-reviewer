@@ -1,4 +1,4 @@
-var grammarList = [
+grammarListN3 = [
     {
         level: 3,
         pageUrl: "https://jlptsensei.com/learn-japanese-grammar/%e4%b8%8a%e3%81%92%e3%82%8b-ageru-meaning/",

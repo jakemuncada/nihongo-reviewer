@@ -1,4 +1,6 @@
 var currIdx = 0;
+var selectedLevel = 5;
+var grammarList = [];
 var sampleSentences = [];
 
 var divEng = null;
@@ -24,6 +26,9 @@ window.onload = function () {
 
     // Initialize keyboard press.
     initKeydown();
+
+    // Initialize the grammar lists.
+    initGrammarLists();
 
     // Initialize the settings.
     initSettings();
@@ -59,26 +64,57 @@ function initButtons() {
     btnSettings.addEventListener("click", showSettings);
 }
 
+function initGrammarLists() {
+    const process = (grammarList) => {
+        return grammarList.map((item) => {
+            let key = `n${item.level}-grammar${item.num}`;
+            let isSelected = localStorage.getItem(key);
+            isSelected = isSelected === null ? "true" : "false";
+            isSelected = isSelected === "true" ? true : false;
+            return {
+                num: item.num,
+                level: item.level,
+                eng: item.eng,
+                jap: item.jap,
+                meaning: item.meaning,
+                flashcardUrl: item.flashcardUrl,
+                sampleSentences: item.sampleSentences,
+                selected: isSelected,
+            };
+        });
+    };
+
+    grammarListN1 = process(grammarListN1);
+    grammarListN2 = process(grammarListN2);
+    grammarListN3 = process(grammarListN3);
+    grammarListN4 = process(grammarListN4);
+    grammarListN5 = process(grammarListN5);
+}
+
 function initSettings() {
     window.onclick = function (event) {
         // Close the modal if the user clicks outside it.
         if (event.target == settingsModal) {
+            saveSettings();
             settingsModal.style.display = "none";
         }
     };
 
+    selectedLevel = localStorage.getItem("selectedLevel");
+    selectedLevel = selectedLevel === null ? 5 : parseInt(selectedLevel, 10);
+    document.getElementById("levelN" + selectedLevel).checked = true;
+
+    document.getElementById("levelN1").addEventListener("click", () => selectGrammarLevel(1));
+    document.getElementById("levelN2").addEventListener("click", () => selectGrammarLevel(2));
+    document.getElementById("levelN3").addEventListener("click", () => selectGrammarLevel(3));
+    document.getElementById("levelN4").addEventListener("click", () => selectGrammarLevel(4));
+    document.getElementById("levelN5").addEventListener("click", () => selectGrammarLevel(5));
+
     document.getElementById("btnSettingsAll").addEventListener("click", selectAllLessons);
     document.getElementById("btnSettingsNone").addEventListener("click", deselectAllLessons);
-    document.getElementById("btnSettingsSave").addEventListener("click", saveSettings);
-    document.getElementById("btnSettingsCancel").addEventListener("click", hideSettings);
-
-    const btnRandom = document.getElementById("btnSettingsRandom10");
-    if (grammarList.length <= 10) {
-        btnRandom.hidden = true;
-    }
-    btnRandom.addEventListener("click", selectRandomLessons);
-
-    loadSettings();
+    document.getElementById("btnSettingsRandom10").addEventListener("click", selectRandomLessons);
+    // document.getElementById("btnSettingsSave").addEventListener("click", saveSettings);
+    // document.getElementById("btnSettingsCancel").addEventListener("click", hideSettings);
 }
 
 function initKeydown() {
@@ -113,34 +149,108 @@ function initKeydown() {
 }
 
 /* ********************************************************************** */
+/*  DATA                                                                  */
+/* ********************************************************************** */
+
+function refreshGrammarList() {
+    switch (selectedLevel) {
+        case 1:
+            grammarList = grammarListN1;
+            break;
+        case 2:
+            grammarList = grammarListN2;
+            break;
+        case 3:
+            grammarList = grammarListN3;
+            break;
+        case 4:
+            grammarList = grammarListN4;
+            break;
+        case 5:
+        default:
+            grammarList = grammarListN5;
+    }
+    console.log(`There are ${grammarList.length} grammar patterns in N${selectedLevel}.`);
+}
+
+function loadSampleSentences() {
+    refreshGrammarList();
+    sampleSentences = [];
+
+    var count = 0;
+    grammarList.forEach((item) => {
+        if (item.selected) {
+            count += 1;
+            item.sampleSentences.forEach((sampleSentence) => {
+                const tmp = {
+                    main: sampleSentence.main,
+                    furi: sampleSentence.furi,
+                    meaning: sampleSentence.meaning,
+                    flashcardUrl: item.flashcardUrl,
+                };
+                sampleSentences.push(tmp);
+            });
+        }
+    });
+
+    console.log(
+        `Loaded ${sampleSentences.length} sample sentences from ${count}`,
+        `grammar patterns of N${selectedLevel} level.`
+    );
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    shuffleArray(sampleSentences);
+
+    currIdx = 0;
+    showCurr();
+}
+
+/* ********************************************************************** */
 /*  SETTINGS                                                              */
 /* ********************************************************************** */
 
 function showSettings() {
-    refreshSettings();
+    redisplayGrammarLessonList();
     settingsModal.style.display = "block";
 }
 
 function hideSettings() {
-    loadSettings();
     settingsModal.style.display = "none";
+    currIdx = 0;
+    showCurr();
+}
+
+function selectGrammarLevel(level) {
+    selectedLevel = level;
+    redisplayGrammarLessonList();
 }
 
 function selectAllLessons() {
     grammarList.forEach((item) => {
         item.selected = true;
     });
-    refreshSettings();
+    redisplayGrammarLessonList();
 }
 
 function deselectAllLessons() {
     grammarList.forEach((item) => {
         item.selected = false;
     });
-    refreshSettings();
+    redisplayGrammarLessonList();
 }
 
 function selectRandomLessons() {
+    if (grammarList.length <= 10) {
+        selectAllLessons();
+        return;
+    }
+
     var selectedLessons = [];
     for (var i = 0; i < 10; i++) {
         const len = grammarList.length;
@@ -157,19 +267,11 @@ function selectRandomLessons() {
         grammarList[i].selected = selectedLessons.includes(i) ? true : false;
     }
 
-    refreshSettings();
-}
-
-function loadSettings() {
-    grammarList.forEach((item) => {
-        const key = `n${item.level}-grammar${item.num}`;
-        var value = localStorage.getItem(key);
-        value = value === null ? true : value === "true" ? true : false;
-        item.selected = value;
-    });
+    redisplayGrammarLessonList();
 }
 
 function saveSettings() {
+    localStorage.setItem("selectedLevel", selectedLevel);
     grammarList.forEach((item) => {
         const checkbox = document.getElementById(`checkbox${item.num}`);
         const isSelected = checkbox.checked;
@@ -183,17 +285,17 @@ function saveSettings() {
     loadSampleSentences();
 }
 
-function refreshSettings() {
+function redisplayGrammarLessonList() {
+    refreshGrammarList();
     var htmlStr = '<table id="settingsTable">';
     grammarList.forEach((item) => {
         const id = `checkbox${item.num}`;
         const name = `${item.num}`;
         const style = item.selected ? `style="background-color: lightblue;"` : "";
         const checked = item.selected ? "checked" : "";
-        const checkboxStr = `<input type="checkbox" id="${id}" name="${name}" ${checked}/>`;
 
         var rowStr = `<tr id="settingsRow${item.num}" ${style} class="settingsRow noselect">`;
-        rowStr += `<td>${checkboxStr}</td>`;
+        rowStr += `<td><input type="checkbox" id="${id}" name="${name}" ${checked}/></td>`;
         rowStr += `<td>${item.eng}</td><td>${item.jap}</td><td>${item.meaning}</td>`;
         rowStr += "</tr>";
         htmlStr += rowStr;
@@ -221,46 +323,14 @@ function handleSettingsRowClick(row) {
 /*  SAMPLE SENTENCES                                                      */
 /* ********************************************************************** */
 
-function loadSampleSentences() {
-    sampleSentences = [];
-
-    var count = 0;
-    grammarList.forEach((item) => {
-        if (item.selected) {
-            count += 1;
-            item.sampleSentences.forEach((sampleSentece) => {
-                const tmp = {
-                    main: sampleSentece.main,
-                    furi: sampleSentece.furi,
-                    meaning: sampleSentece.meaning,
-                    flashcardUrl: item.flashcardUrl,
-                };
-                sampleSentences.push(tmp);
-            });
-        }
-    });
-
-    console.log(`Loaded ${sampleSentences.length} sample sentences from ${count} grammar patterns.`);
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    shuffleArray(sampleSentences);
-
-    currIdx = 0;
-    showCurr();
-}
-
 function showCurr() {
     if (currIdx < 0 || currIdx >= sampleSentences.length) {
+        divEng.hidden = true;
         console.log("Invalid index:", currIdx);
         return;
     }
 
+    divEng.hidden = false;
     hideNihongo();
     hideFlashcard();
 
@@ -272,7 +342,12 @@ function showCurr() {
     divJap.innerHTML = item.main;
     divFuri.innerHTML = item.furi;
 
-    image.src = item.flashcardUrl;
+    if (item.flashcardUrl !== null) {
+        btnFlashcard.disabled = false;
+        image.src = item.flashcardUrl;
+    } else {
+        btnFlashcard.disabled = true;
+    }
 }
 
 function showPrev() {
@@ -305,16 +380,6 @@ function hideNihongo() {
     btnNihongo.innerHTML = "Show Nihongo";
 }
 
-function showFlashcard() {
-    divImgWrap.hidden = false;
-    btnFlashcard.innerHTML = "Hide Flashcard";
-}
-
-function hideFlashcard() {
-    divImgWrap.hidden = true;
-    btnFlashcard.innerHTML = "Show Flashcard";
-}
-
 function toggleNihongo() {
     if (divJap.hidden) {
         showNihongo();
@@ -324,7 +389,7 @@ function toggleNihongo() {
 }
 
 /* ********************************************************************** */
-/*  TOGGLE FLASHCARD                                                      */
+/*  FLASHCARD                                                             */
 /* ********************************************************************** */
 
 function toggleFlashcard() {
@@ -333,4 +398,14 @@ function toggleFlashcard() {
     } else {
         hideFlashcard();
     }
+}
+
+function showFlashcard() {
+    divImgWrap.hidden = false;
+    btnFlashcard.innerHTML = "Hide Flashcard";
+}
+
+function hideFlashcard() {
+    divImgWrap.hidden = true;
+    btnFlashcard.innerHTML = "Show Flashcard";
 }
