@@ -248,6 +248,15 @@ button.control-btn[disabled] {
     }
 }
 
+@media only screen and (max-width: 320px) {
+    .control-btn {
+        max-height: 48px;
+    }
+    .control-btn-large {
+        min-width: 65px;
+    }
+}
+
 /* ****************************** */
 /*  FLASHCARD                     */
 /* ****************************** */
