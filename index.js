@@ -9,7 +9,7 @@ var divFuri = null;
 var divImgWrap = null;
 var imgFlashcard = null;
 
-var btnSettings = null;
+// var btnSettings = null;
 var btnPrev = null;
 var btnNihongo = null;
 var btnFlashcard = null;
@@ -50,7 +50,7 @@ function initElements() {
     settingsModal = document.getElementById("settingsModal");
     settingsTableDiv = document.getElementById("settingsTableDiv");
 
-    btnSettings = document.getElementById("btnSettings");
+    // btnSettings = document.getElementById("btnSettings");
     btnPrev = document.getElementById("btnPrev");
     btnNihongo = document.getElementById("btnNihongo");
     btnFlashcard = document.getElementById("btnFlashcard");
@@ -62,7 +62,7 @@ function initButtons() {
     btnNext.addEventListener("click", showNext);
     btnNihongo.addEventListener("click", toggleNihongo);
     btnFlashcard.addEventListener("click", toggleFlashcard);
-    btnSettings.addEventListener("click", showSettings);
+    // btnSettings.addEventListener("click", showSettings);
 }
 
 function initGrammarLists() {

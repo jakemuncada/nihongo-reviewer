@@ -38,17 +38,93 @@ button {
 }
 
 /* ****************************** */
+/*  HEADER                        */
+/* ****************************** */
+
+.header {
+    overflow: hidden;
+    background-color: #333;
+    padding: 14px 10px;
+}
+
+.header a {
+    float: left;
+    color: #ddd;
+    text-align: center;
+    padding: 12px;
+    font-family: Verdana, sans-serif;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 20px;
+    border-radius: 4px;
+}
+
+.header a.logo {
+    font-size: 25px;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+.header a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.header a.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.header-right {
+    float: right;
+}
+
+.header-right > a {
+    margin-left: 4px;
+}
+
+@media screen and (max-width: 540px) {
+    .logo {
+        margin-bottom: 6px;
+    }
+    .header a {
+        float: none;
+        display: inline-block;
+        text-align: left;
+        font-size: 15px;
+        line-height: 16px;
+    }
+    .header-right {
+        float: none;
+    }
+}
+
+@media screen and (max-height: 400px) {
+    .header {
+        padding: 6px 10px;
+    }
+    .header a {
+        padding: 6px;
+        font-size: 1.1em;
+        line-height: 1.15em;
+    }
+    .header a.logo {
+        font-size: 1.2em;
+    }
+}
+
+/* ****************************** */
 /*  MAIN CONTAINER                */
 /* ****************************** */
 
 #main {
     max-width: 760px;
-    padding-top: 20px;
+    padding-top: 12px;
 }
 
 #content {
     min-height: 100px;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     padding: 18px;
     border: 1px solid black;
 }
@@ -106,6 +182,12 @@ button.control-btn[disabled] {
     min-width: 120px;
 }
 
+#controls-text {
+    margin: auto;
+    text-align: center;
+    font-size: 0.85em;
+}
+
 @media only screen and (max-width: 500px) {
     .control-btn {
         min-height: 30px;
@@ -120,10 +202,10 @@ button.control-btn[disabled] {
     }
 }
 
-#controls-text {
-    margin: auto;
-    text-align: center;
-    font-size: 0.85em;
+@media only screen and (max-height: 340px) {
+    #controls-text {
+        display: none;
+    }
 }
 
 /* ****************************** */
