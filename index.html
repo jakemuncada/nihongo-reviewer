@@ -15,6 +15,7 @@
 <body>
     <header class="header">
         <a href="https://github.com/jakemuncada/nihongo-reviewer" class="logo">jekmuncada</a>
+        <!-- Included a burger menu icon in case the menu items cannot fit in the future. -->
         <!-- <div class="burger">
             <svg viewBox="0 0 100 80" width="32" height="32" fill="#ddd">
                 <rect width="100" height="16" rx="8"></rect>
@@ -30,31 +31,33 @@
     </header>
     <div id="main" class="center">
         <!-- <button id="btnSettings">Settings</button> -->
-        <div id="instructions">
-            Practice saying the following sentence in Nihongo:
-        </div>
-        <div id="content">
-            <div id="eng" class="center"></div>
-            <div id="jap" class="center" hidden></div>
-            <div id="furi" class="center" hidden></div>
-        </div>
+        <div id="mainFlex">
+            <div id="instructions">
+                Practice saying the following sentence in Nihongo:
+            </div>
+            <div id="content">
+                <div id="eng" class="center"></div>
+                <div id="jap" class="center" hidden></div>
+                <div id="furi" class="center" hidden></div>
+            </div>
 
-        <div id="divControls">
-            <button id="btnPrev" class="control-btn control-btn-small" disabled>
-                <img id="btnPrevIcon" class="btnIcon" src="icons/prev.svg" alt="prev" />
-            </button>
-            <button id="btnNihongo" class="control-btn control-btn-large">
-                <img id="btnSpeechIcon" class="btnIcon" src="icons/speech.svg" alt="sentence" />
-            </button>
-            <button id="btnFlashcard" class="control-btn control-btn-large">
-                <img id="btnFlashcardIcon" class="btnIcon" src="icons/img_icon.svg" alt="flashcard" />
-            </button>
-            <button id="btnNext" class="control-btn control-btn-small">
-                <img id="btnNextIcon" class="btnIcon" src="icons/next.svg" alt="next" />
-            </button>
-        </div>
-        <div id="controls-text">
-            <i>You can also use the Arrow keys or WSAD keys.</i>
+            <div id="divControls">
+                <button id="btnPrev" class="control-btn control-btn-small" disabled>
+                    <img id="btnPrevIcon" class="btnIcon" src="icons/prev.svg" alt="prev" />
+                </button>
+                <button id="btnNihongo" class="control-btn control-btn-large">
+                    <img id="btnSpeechIcon" class="btnIcon" src="icons/speech.svg" alt="sentence" />
+                </button>
+                <button id="btnFlashcard" class="control-btn control-btn-large">
+                    <img id="btnFlashcardIcon" class="btnIcon" src="icons/img_icon.svg" alt="flashcard" />
+                </button>
+                <button id="btnNext" class="control-btn control-btn-small">
+                    <img id="btnNextIcon" class="btnIcon" src="icons/next.svg" alt="next" />
+                </button>
+            </div>
+            <div id="controls-text">
+                <i>You can also use the Arrow keys or WSAD keys.</i>
+            </div>
         </div>
         
         <div id="flashcard-wrap" hidden>

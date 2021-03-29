@@ -122,11 +122,38 @@ button {
     padding-top: 12px;
 }
 
-#content {
-    min-height: 100px;
-    margin-bottom: 12px;
-    padding: 18px;
-    border: 1px solid black;
+#mainFlex {
+    display: flex;
+    height: -webkit-calc(100% - 85px);
+    height: -moz-calc(100% - 85px);
+    height: calc(100% - 85px);
+    max-height: 500px;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+@media only screen and (max-height: 400px) {
+    #mainFlex {
+        height: -webkit-calc(100% - 58px);
+        height: -moz-calc(100% - 58px);
+        height: calc(100% - 58px);
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    #mainFlex {
+        height: -webkit-calc(100% - 128px);
+        height: -moz-calc(100% - 128px);
+        height: calc(100% - 128px);
+    }
+}
+
+@media only screen and (max-width: 540px) and (max-height: 400px) {
+    #mainFlex {
+        height: -webkit-calc(100% - 96px);
+        height: -moz-calc(100% - 96px);
+        height: calc(100% - 96px);
+    }
 }
 
 /* ****************************** */
@@ -135,6 +162,15 @@ button {
 
 #instructions {
     margin-top: 6px;
+}
+
+#content {
+    overflow: auto;
+    flex-grow: 1;
+    min-height: 40px;
+    margin-bottom: 12px;
+    padding: 18px;
+    border: 1px solid black;
 }
 
 /* The color of the highlighted grammar. */
