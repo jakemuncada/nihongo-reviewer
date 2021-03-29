@@ -126,6 +126,7 @@ function initSettings() {
 
 function initKeydown() {
     document.addEventListener("keydown", function (e) {
+        document.activeElement.blur();
         switch (e.key) {
             case "ArrowUp":
             case "w":
