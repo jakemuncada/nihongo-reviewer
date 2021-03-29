@@ -1,14 +1,49 @@
+/* ****************************** */
+/*  COMMON                        */
+/* ****************************** */
+
 body {
     font-size: 1em;
 }
 
-#main {
-    max-width: 760px;
-    padding-top: 20px;
+img {
+    max-width: 100%;
 }
 
 .center {
     margin: auto;
+}
+
+button {
+    font-size: 0.95em;
+    margin-bottom: 12px;
+}
+
+.right {
+    float: right;
+}
+
+.vert-margin {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ****************************** */
+/*  MAIN CONTAINER                */
+/* ****************************** */
+
+#main {
+    max-width: 760px;
+    padding-top: 20px;
 }
 
 #content {
@@ -18,26 +53,56 @@ body {
     border: 1px solid black;
 }
 
+/* ****************************** */
+/*  SENTENCE BOX                  */
+/* ****************************** */
+
 #instructions {
-    margin-top: 18px;
+    margin-top: 6px;
 }
 
+/* The color of the highlighted grammar. */
+.color {
+    color: red;
+}
+
+/* ****************************** */
+/*  CONTROLS                      */
+/* ****************************** */
+
 #divControls {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
     margin: auto;
     text-align: center;
+    max-height: 80px;
     max-width: 600px;
 }
 
+.btnIcon {
+    margin: auto;
+    height: 100%;
+}
+
 .control-btn {
+    margin-left: 4px;
+    margin-right: 4px;
     min-height: 40px;
+    opacity: 100%;
+}
+
+button.control-btn:disabled,
+button.control-btn[disabled] {
+    opacity: 40%;
 }
 
 .control-btn-small {
-    min-width: 50px;
+    min-width: 60px;
 }
 
 .control-btn-large {
-    min-width: 150px;
+    min-width: 120px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -46,32 +111,33 @@ body {
     }
 
     .control-btn-small {
-        min-width: 40px;
+        min-width: 50px;
     }
 
     .control-btn-large {
-        min-width: 120px;
+        min-width: 80px;
     }
 }
 
-.color {
-    color: red;
+#controls-text {
+    margin: auto;
+    text-align: center;
+    font-size: 0.85em;
 }
 
-img {
-    max-width: 100%;
-}
+/* ****************************** */
+/*  FLASHCARD                     */
+/* ****************************** */
 
-button {
-    font-size: 0.95em;
-    margin-bottom: 12px;
-}
-
-#image-wrap {
+#flashcard-wrap {
     margin-top: 12px;
     margin: auto;
     text-align: center;
 }
+
+/* ****************************** */
+/*  SETTINGS MODAL                */
+/* ****************************** */
 
 .modal {
     display: none;
@@ -97,6 +163,10 @@ button {
     width: 80%;
 }
 
+/* ****************************** */
+/*  SETTINGS TABLE                */
+/* ****************************** */
+
 table,
 th,
 td {
@@ -107,22 +177,4 @@ td {
 td {
     padding: 8px;
     cursor: pointer;
-}
-
-.right {
-    float: right;
-}
-
-.vert-margin {
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }

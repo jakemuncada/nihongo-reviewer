@@ -7,7 +7,7 @@ var divEng = null;
 var divJap = null;
 var divFuri = null;
 var divImgWrap = null;
-var image = null;
+var imgFlashcard = null;
 
 var btnSettings = null;
 var btnPrev = null;
@@ -45,8 +45,8 @@ function initElements() {
     divEng = document.getElementById("eng");
     divJap = document.getElementById("jap");
     divFuri = document.getElementById("furi");
-    divImgWrap = document.getElementById("image-wrap");
-    image = document.getElementById("image");
+    divImgWrap = document.getElementById("flashcard-wrap");
+    imgFlashcard = document.getElementById("flashcard");
     settingsModal = document.getElementById("settingsModal");
     settingsTableDiv = document.getElementById("settingsTableDiv");
 
@@ -328,7 +328,7 @@ function handleSettingsRowClick(row) {
 }
 
 /* ********************************************************************** */
-/*  SAMPLE SENTENCES                                                      */
+/*  CONTROLS                                                              */
 /* ********************************************************************** */
 
 function showCurr() {
@@ -336,14 +336,15 @@ function showCurr() {
         divEng.hidden = true;
         btnPrev.disabled = true;
         btnNext.disabled = true;
-        btnFlashcard.disabled = true;
-        btnNihongo.disabled = true;
+        disableFlashcard(true);
+        disableNihongo(true);
         console.log("Invalid index:", currIdx);
         return;
     }
 
     divEng.hidden = false;
-    btnNihongo.disabled = false;
+    disableFlashcard(false);
+    disableNihongo(false);
 
     hideNihongo();
     hideFlashcard();
@@ -358,7 +359,7 @@ function showCurr() {
 
     if (item.flashcardUrl !== null) {
         btnFlashcard.disabled = false;
-        image.src = item.flashcardUrl;
+        imgFlashcard.src = item.flashcardUrl;
     } else {
         btnFlashcard.disabled = true;
     }
@@ -382,16 +383,18 @@ function showNext() {
     }
 }
 
+/* ********************************************************************** */
+/*  NIHONGO BUTTON                                                        */
+/* ********************************************************************** */
+
 function showNihongo() {
     divJap.hidden = false;
     divFuri.hidden = false;
-    btnNihongo.innerHTML = "Hide Nihongo";
 }
 
 function hideNihongo() {
     divJap.hidden = true;
     divFuri.hidden = true;
-    btnNihongo.innerHTML = "Show Nihongo";
 }
 
 function toggleNihongo() {
@@ -402,8 +405,17 @@ function toggleNihongo() {
     }
 }
 
+function disableNihongo(isDisabled) {
+    if (isDisabled) {
+        hideNihongo();
+        btnNihongo.disabled = true;
+    } else {
+        btnNihongo.disabled = false;
+    }
+}
+
 /* ********************************************************************** */
-/*  FLASHCARD                                                             */
+/*  FLASHCARD BUTTON                                                      */
 /* ********************************************************************** */
 
 function toggleFlashcard() {
@@ -416,10 +428,17 @@ function toggleFlashcard() {
 
 function showFlashcard() {
     divImgWrap.hidden = false;
-    btnFlashcard.innerHTML = "Hide Flashcard";
 }
 
 function hideFlashcard() {
     divImgWrap.hidden = true;
-    btnFlashcard.innerHTML = "Show Flashcard";
+}
+
+function disableFlashcard(isDisabled) {
+    if (isDisabled) {
+        hideFlashcard();
+        btnFlashcard.disabled = true;
+    } else {
+        btnFlashcard.disabled = false;
+    }
 }

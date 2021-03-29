@@ -25,17 +25,25 @@
         </div>
 
         <div id="divControls">
-            <button id="btnPrev" class="control-btn control-btn-small" disabled>Prev</button>
-            <button id="btnNihongo" class="control-btn control-btn-large">Show Nihongo</button>
-            <button id="btnFlashcard" class="control-btn control-btn-large">Show Flashcard</button>
-            <button id="btnNext" class="control-btn control-btn-small">Next</button>
-            <div id="controls-text">
-                You can also use the Arrow keys or WSAD keys.
-            </div>
+            <button id="btnPrev" class="control-btn control-btn-small" disabled>
+                <img id="btnPrevIcon" class="btnIcon" src="icons/prev.svg" alt="prev" />
+            </button>
+            <button id="btnNihongo" class="control-btn control-btn-large">
+                <img id="btnSpeechIcon" class="btnIcon" src="icons/speech.svg" alt="sentence" />
+            </button>
+            <button id="btnFlashcard" class="control-btn control-btn-large">
+                <img id="btnFlashcardIcon" class="btnIcon" src="icons/img_icon.svg" alt="flashcard" />
+            </button>
+            <button id="btnNext" class="control-btn control-btn-small">
+                <img id="btnNextIcon" class="btnIcon" src="icons/next.svg" alt="next" />
+            </button>
+        </div>
+        <div id="controls-text">
+            <i>You can also use the Arrow keys or WSAD keys.</i>
         </div>
         
-        <div id="image-wrap" hidden>
-            <img src="" id="image" alt="" />
+        <div id="flashcard-wrap" hidden>
+            <img src="" id="flashcard" alt="" />
         </div>
     </div>
 
