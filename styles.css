@@ -192,19 +192,23 @@ button.control-btn[disabled] {
     .control-btn {
         min-height: 30px;
     }
-
     .control-btn-small {
         min-width: 50px;
     }
-
     .control-btn-large {
         min-width: 80px;
     }
 }
 
-@media only screen and (max-height: 340px) {
+@media only screen and (max-height: 400px) {
     #controls-text {
         display: none;
+    }
+    .control-btn {
+        max-height: 48px;
+    }
+    .control-btn-large {
+        min-width: 80px;
     }
 }
 
