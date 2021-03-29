@@ -1,4 +1,5 @@
 var currIdx = 0;
+var currFlashcardUrl = null;
 var selectedLevel = 5;
 var grammarList = [];
 var sampleSentences = [];
@@ -6,16 +7,14 @@ var sampleSentences = [];
 var divEng = null;
 var divJap = null;
 var divFuri = null;
-var divImgWrap = null;
-var imgFlashcard = null;
 
-// var btnSettings = null;
 var btnPrev = null;
 var btnNihongo = null;
 var btnFlashcard = null;
 var btnNext = null;
-var settingsModal = null;
-var settingsTableDiv = null;
+
+var modal = null;
+var modalContent = null;
 
 window.onload = function () {
     // Initialize all elements.
@@ -29,6 +28,9 @@ window.onload = function () {
 
     // Initialize the grammar lists.
     initGrammarLists();
+
+    // Initialize the modal.
+    initModal();
 
     // Initialize the settings.
     initSettings();
@@ -45,24 +47,21 @@ function initElements() {
     divEng = document.getElementById("eng");
     divJap = document.getElementById("jap");
     divFuri = document.getElementById("furi");
-    divImgWrap = document.getElementById("flashcard-wrap");
-    imgFlashcard = document.getElementById("flashcard");
-    settingsModal = document.getElementById("settingsModal");
-    settingsTableDiv = document.getElementById("settingsTableDiv");
 
-    // btnSettings = document.getElementById("btnSettings");
     btnPrev = document.getElementById("btnPrev");
     btnNihongo = document.getElementById("btnNihongo");
     btnFlashcard = document.getElementById("btnFlashcard");
     btnNext = document.getElementById("btnNext");
+
+    modal = document.getElementById("modal");
+    modalContent = document.getElementById("modalContent");
 }
 
 function initButtons() {
     btnPrev.addEventListener("click", showPrev);
     btnNext.addEventListener("click", showNext);
     btnNihongo.addEventListener("click", toggleNihongo);
-    btnFlashcard.addEventListener("click", toggleFlashcard);
-    // btnSettings.addEventListener("click", showSettings);
+    btnFlashcard.addEventListener("click", showFlashcard);
 }
 
 function initGrammarLists() {
@@ -72,7 +71,6 @@ function initGrammarLists() {
             let isSelected = localStorage.getItem(key);
             isSelected = isSelected === null ? "true" : isSelected;
             isSelected = isSelected === "true" ? true : false;
-            console.log(key, isSelected);
             return {
                 num: item.num,
                 level: item.level,
@@ -93,35 +91,39 @@ function initGrammarLists() {
     grammarListN5 = process(grammarListN5);
 }
 
-function initSettings() {
+function initModal() {
     window.onclick = function (event) {
         // Close the modal if the user clicks outside it.
-        if (event.target == settingsModal) {
-            saveSettings();
-            settingsModal.style.display = "none";
+        if (event.target == modal || event.target == modalContent) {
+            hideFlashcard();
         }
     };
+}
 
-    document.getElementById("btnCloseSettings").addEventListener("click", () => {
-        saveSettings();
-        settingsModal.style.display = "none";
-    });
-
-    selectedLevel = localStorage.getItem("selectedLevel");
-    selectedLevel = selectedLevel === null ? 5 : parseInt(selectedLevel, 10);
-    document.getElementById("levelN" + selectedLevel).checked = true;
-
-    document.getElementById("levelN1").addEventListener("click", () => selectGrammarLevel(1));
-    document.getElementById("levelN2").addEventListener("click", () => selectGrammarLevel(2));
-    document.getElementById("levelN3").addEventListener("click", () => selectGrammarLevel(3));
-    document.getElementById("levelN4").addEventListener("click", () => selectGrammarLevel(4));
-    document.getElementById("levelN5").addEventListener("click", () => selectGrammarLevel(5));
-
-    document.getElementById("btnSettingsAll").addEventListener("click", selectAllLessons);
-    document.getElementById("btnSettingsNone").addEventListener("click", deselectAllLessons);
-    document.getElementById("btnSettingsRandom10").addEventListener("click", selectRandomLessons);
-    // document.getElementById("btnSettingsSave").addEventListener("click", saveSettings);
-    // document.getElementById("btnSettingsCancel").addEventListener("click", hideSettings);
+function initSettings() {
+    // window.onclick = function (event) {
+    //     // Close the modal if the user clicks outside it.
+    //     if (event.target == settingsModal) {
+    //         saveSettings();
+    //         settingsModal.style.display = "none";
+    //     }
+    // };
+    // document.getElementById("btnCloseSettings").addEventListener("click", () => {
+    //     saveSettings();
+    //     settingsModal.style.display = "none";
+    // });
+    //
+    // selectedLevel = localStorage.getItem("selectedLevel");
+    // selectedLevel = selectedLevel === null ? 5 : parseInt(selectedLevel, 10);
+    // document.getElementById("levelN" + selectedLevel).checked = true;
+    // document.getElementById("levelN1").addEventListener("click", () => selectGrammarLevel(1));
+    // document.getElementById("levelN2").addEventListener("click", () => selectGrammarLevel(2));
+    // document.getElementById("levelN3").addEventListener("click", () => selectGrammarLevel(3));
+    // document.getElementById("levelN4").addEventListener("click", () => selectGrammarLevel(4));
+    // document.getElementById("levelN5").addEventListener("click", () => selectGrammarLevel(5));
+    // document.getElementById("btnSettingsAll").addEventListener("click", selectAllLessons);
+    // document.getElementById("btnSettingsNone").addEventListener("click", deselectAllLessons);
+    // document.getElementById("btnSettingsRandom10").addEventListener("click", selectRandomLessons);
 }
 
 function initKeydown() {
@@ -131,7 +133,9 @@ function initKeydown() {
             case "ArrowUp":
             case "w":
             case "W":
-                toggleNihongo();
+                if (modal.style.display === "none") {
+                    toggleNihongo();
+                }
                 e.preventDefault();
                 break;
             case "ArrowDown":
@@ -143,13 +147,17 @@ function initKeydown() {
             case "ArrowLeft":
             case "a":
             case "A":
-                showPrev();
+                if (modal.style.display === "none") {
+                    showPrev();
+                }
                 e.preventDefault();
                 break;
             case "ArrowRight":
             case "d":
             case "D":
-                showNext();
+                if (modal.style.display === "none") {
+                    showNext();
+                }
                 e.preventDefault();
                 break;
         }
@@ -336,15 +344,15 @@ function showCurr() {
         divEng.hidden = true;
         btnPrev.disabled = true;
         btnNext.disabled = true;
-        disableFlashcard(true);
-        disableNihongo(true);
+        disableFlashcardBtn(true);
+        disableNihongoBtn(true);
         console.log("Invalid index:", currIdx);
         return;
     }
 
     divEng.hidden = false;
-    disableFlashcard(false);
-    disableNihongo(false);
+    disableFlashcardBtn(false);
+    disableNihongoBtn(false);
 
     hideNihongo();
     hideFlashcard();
@@ -356,12 +364,12 @@ function showCurr() {
     divEng.innerHTML = item.meaning;
     divJap.innerHTML = item.main;
     divFuri.innerHTML = item.furi;
+    currFlashcardUrl = item.flashcardUrl;
 
     if (item.flashcardUrl !== null) {
-        btnFlashcard.disabled = false;
-        imgFlashcard.src = item.flashcardUrl;
+        disableFlashcardBtn(false);
     } else {
-        btnFlashcard.disabled = true;
+        disableFlashcardBtn(true);
     }
 }
 
@@ -405,7 +413,7 @@ function toggleNihongo() {
     }
 }
 
-function disableNihongo(isDisabled) {
+function disableNihongoBtn(isDisabled) {
     if (isDisabled) {
         hideNihongo();
         btnNihongo.disabled = true;
@@ -419,7 +427,7 @@ function disableNihongo(isDisabled) {
 /* ********************************************************************** */
 
 function toggleFlashcard() {
-    if (divImgWrap.hidden) {
+    if (modal.style.display === "none") {
         showFlashcard();
     } else {
         hideFlashcard();
@@ -427,14 +435,21 @@ function toggleFlashcard() {
 }
 
 function showFlashcard() {
-    divImgWrap.hidden = false;
+    if (currFlashcardUrl !== null) {
+        modal.style.display = "block";
+        modalContent.innerHTML = `<img id="flashcard-img" src="${currFlashcardUrl}" alt="grammar-flashcard" />`;
+        document.getElementById("flashcard-img").addEventListener("click", hideFlashcard);
+    } else {
+        console.log("Cannot show flashcard, src is null.");
+    }
 }
 
 function hideFlashcard() {
-    divImgWrap.hidden = true;
+    modal.style.display = "none";
+    modalContent.innerHTML = "";
 }
 
-function disableFlashcard(isDisabled) {
+function disableFlashcardBtn(isDisabled) {
     if (isDisabled) {
         hideFlashcard();
         btnFlashcard.disabled = true;
