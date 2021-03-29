@@ -90,6 +90,7 @@ button {
     margin-right: 4px;
     min-height: 40px;
     opacity: 100%;
+    padding: 6px;
 }
 
 button.control-btn:disabled,
